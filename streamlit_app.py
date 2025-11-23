@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 # import joblib
 import time
-from Pages.Forms import show_name_form, show_bio_form, show_lifestyle_form, show_health_form, show_summary, next_form
+from Pages.Forms import *
 
 # model = joblib.load("Models/diabetes_rf_model_streamlit.pkl")
 st.title("Diabetes Prediction App ")
@@ -14,7 +14,9 @@ form_mapping = {
     "bio_info" : show_bio_form,
     "lifestyle": show_lifestyle_form,
     "health_info": show_health_form,
-    "summary": show_summary    
+    "wellbeing_info": show_wellbeing_form,
+    "summary": show_summary,
+    "results" :  show_results,  
 }
 
 
@@ -42,14 +44,16 @@ Please note that this tool provides an estimate only and is not a medical diagno
 st.write(message)
     
 
-if st.session_state.current_form != "summary":
+if st.session_state.current_form != "summary" and st.session_state.current_form != "results":
     with st.form(key='main_form'):
 
         # 1. render UI, get validator function
         validate_fn = form_mapping[form]()  
 
         # 2. render submit button
-        submitted = st.form_submit_button("Next")
+        submitted = st.form_submit_button("Next ➡️")
+
+
 
     # 3. handle submission AFTER form
     if submitted:
@@ -57,5 +61,18 @@ if st.session_state.current_form != "summary":
         if is_valid:
             next_form(form)
             st.rerun()
-else:
+elif st.session_state.current_form == "summary":
     show_summary()
+else:
+    show_results()
+
+
+if st.session_state.current_form != "name_info" and st.session_state.current_form != "results":
+    if st.button("⬅️ Previous"):
+        previous_form(st.session_state["current_form"])
+        st.rerun() 
+
+# test = st.button("Test")
+# if test:
+#     st.session_state.current_form = "summary"
+#     st.session_state["form"] = {"name":"RAm","height":172,"weight":75,"bmi":25.351541373715524,"age":50,"gender":1,"educ":4,"fruit":"Yes","vegetable":"Yes","phys":"Yes","alcohol":"No","smoker":"No","bp":"No","chol_check":"No","chol":"No","stroke":"No","heart_disease":"No","diff_walk":"No","menthlth":1,"general_health":2,"physHlth":1,"healthcare":"No","nodoc_cost":"No","income":"Less than $10,000"}
