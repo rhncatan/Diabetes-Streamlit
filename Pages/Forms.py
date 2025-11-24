@@ -444,7 +444,7 @@ def show_wellbeing_form():
 def show_summary():
     st.write("Please review your submission before getting your results.")
     st.subheader("Note: Model Performance and classification")
-    st.write("The model performs well in distinguishing between people with diabetes and without (0.8293 AUC ROC). Based on testing, it does well in catching people who actually have diabetes (83% Recall), but it sometimes might flag people as diabetic when they are not. The model is designed to minimize missed cases of diabetes. It is still best to consult your physician for symptoms or tests.")
+    st.write("The model performs well in distinguishing between people with diabetes and without (0.801493 AUC ROC). Based on testing, it does well in catching people who actually have diabetes (83% Recall), but it sometimes might flag people as diabetic when they are not. The model is designed to minimize missed cases of diabetes. It is still best to consult your physician for symptoms or tests.")
 
     st.write(st.session_state['form'])
 
@@ -567,12 +567,12 @@ def show_results():
 
     if prediction == 1:
         st.success("Based on the model, you are **predicted to have diabetes**.")
-        st.write(f"Predicted probability: **{probability:.2f}**")
+        st.write(f"Predicted probability: **{probability * 100:.2f}%**")
         st.info("It’s important to consult a healthcare professional as soon as possible. "
                 "Please visit your nearest doctor for a proper check-up.")
     else:
         st.success("Based on the model, you are **predicted to not have diabetes**.")
-        st.write(f"Predicted probability of diabetes: **{probability:.2f}**")
+        st.write(f"Predicted probability of diabetes: **{probability * 100:.2f}%**")
         st.info("Even if the result looks good, if you have symptoms or concerns, "
                 "it’s always best to check with your physician for confirmation.")
 
